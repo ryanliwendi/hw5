@@ -29,6 +29,12 @@ std::set<std::string> wordle(
             words.insert(in);
         return words;
     }
+    int count = 0;
+    for (char c : in)
+        if (c == '-')
+            count++;
+    if (count < floating.size())
+        return words;
     int pos = in.find('-');
     string nextin = in;
     for (int i = 0; i < floating.size(); i++)
@@ -41,6 +47,8 @@ std::set<std::string> wordle(
     for (int i = 0; i < 26; i++)
     {
         char c = 'a' + i;
+        if (floating.find(c) != string::npos)
+            continue;
         nextin[pos] = c;
         set<string> temp = wordle(nextin, floating, dict);
         words = set_combine(words, temp);
