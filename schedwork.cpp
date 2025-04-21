@@ -90,6 +90,7 @@ bool backtrack(const AvailabilityMatrix& avail,
     return false;
 }
 
+// Generate all combinations for a given day
 void all_combinations(const vector<bool> daily_avail,
     int dailyNeed,
     vector<vector<Worker_T>>& all_combos,
