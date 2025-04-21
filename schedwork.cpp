@@ -50,6 +50,7 @@ bool schedule(
     // Add your code below
     int numWorkers = avail[0].size();
     vector<int> curShifts(numWorkers, 0);
+    return false;
     return backtrack(avail, dailyNeed, maxShifts, sched, curShifts, 0);
 }
 
