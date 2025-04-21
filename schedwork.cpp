@@ -34,6 +34,11 @@ void all_combinations(const vector<bool> daily_avail,
     vector<Worker_T>& cur_schedule,
     int start);
 
+bool increment(const vector<Worker_T> combo,
+    const size_t maxShifts,
+    vector<int>& curShifts,
+    int amount);
+
 // Add your implementation of schedule() and other helper functions here
 
 bool schedule(
@@ -50,7 +55,6 @@ bool schedule(
     // Add your code below
     int numWorkers = avail[0].size();
     vector<int> curShifts(numWorkers, 0);
-    return false;
     return backtrack(avail, dailyNeed, maxShifts, sched, curShifts, 0);
 }
 
@@ -70,13 +74,7 @@ bool backtrack(const AvailabilityMatrix& avail,
     for (int i = 0; i < all_combos.size(); i++)
     {
         vector<Worker_T> combo = all_combos[i];
-        bool success = true;
-        for (Worker_T j : combo)
-        {
-            curShifts[j]++;
-            if (curShifts[j] > maxShifts)
-                success = false;
-        }
+        bool success = increment(combo, maxShifts, curShifts, 1);
         if (success)
         {
             sched.push_back(combo);
@@ -85,10 +83,24 @@ bool backtrack(const AvailabilityMatrix& avail,
                 return true;
             sched.pop_back();
         }
-        for (Worker_T j : combo)
-            curShifts[j]--;
+        increment(combo, maxShifts, curShifts, -1);
     }
     return false;
+}
+
+bool increment(const vector<Worker_T> combo,
+    const size_t maxShifts,
+    vector<int>& curShifts,
+    int amount)
+{
+    bool success = true;
+    for (Worker_T j : combo)
+    {
+        curShifts[j] += amount;
+        if (curShifts[j] > maxShifts)
+            success = false;
+    }
+    return success;
 }
 
 // Generate all combinations for a given day
