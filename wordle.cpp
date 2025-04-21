@@ -23,6 +23,7 @@ std::set<std::string> wordle(
 {
     // Add your code here
     set<string> words;
+    words.insert("Hello");
     if (in.find('-') == string::npos)
     {
         if (floating.empty() && dict.find(in) != dict.end())
